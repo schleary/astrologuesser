@@ -12,7 +12,12 @@ def index(request):
     context = RequestContext(request, {
         'latest_question_list': latest_question_list,
     })
-    return HttpResponse(context)
+    return HttpResponse(template.render(context))
+
+    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    # output = ', '.join([p.question_text for p in latest_question_list])
+    # return HttpResponse(output)
+
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
