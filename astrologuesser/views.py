@@ -14,11 +14,6 @@ def index(request):
     })
     return HttpResponse(template.render(context))
 
-    # latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    # output = ', '.join([p.question_text for p in latest_question_list])
-    # return HttpResponse(output)
-
-
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'astrologuesser/detail.html', {'question': question})
@@ -26,7 +21,7 @@ def detail(request, question_id):
 def results(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     return render(request, 'astrologuesser/results.html', { 'question': question})
-    
+
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
     try:

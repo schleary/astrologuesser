@@ -1,8 +1,24 @@
+<br />
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="{% url 'astrologuesser:detail' question.id %}">{{ question.question_text }}</a></li>
+        <!-- OLD: <li><a href="{% url 'astrologuesser:detail' question.id %}">{{ question.question_text }}</a></li> -->
+        <!-- NEW:  -->
+        <h1>{{ question.question_text }}</h1>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <form action="{% url 'astrologuesser:vote' question.id %}" method="post">
+          {% csrf_token %}
+          {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.id }}" />
+            <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+
+        <!-- /NEW  -->
     {% endfor %}
+    {% endfor %}
+    <br />
+    <br />
+    <input type="submit" value="Submit" />
+  </form>
     </ul>
 {% else %}
     <p>No polls are available.</p>
